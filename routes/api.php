@@ -13,22 +13,23 @@ use Illuminate\Http\Request;
 |
 */
 
+// Below mention routes are public, user can access those without any restriction.
+// Create New User
+Route::post('register', 'AuthController@register');
+
 Route::group(['prefix' => 'v1/auth','middleware'=> ['cors']], function(){
 
-    // Below mention routes are public, user can access those without any restriction.
-    // Create New User
-    Route::post('register', 'AuthController@register');
 
     // Login User
     Route::post('login', 'AuthController@login');
 
     // Refresh the JWT Token
-    Route::get('refresh', 'AuthController@refresh');
+    Route::post('refresh', 'AuthController@refresh');
 
     // Below mention routes are available only for the authenticated users.
     Route::middleware('auth:api')->group(function () {
         // Get user info
-        Route::get('user', 'AuthController@user');
+        Route::post('user', 'AuthController@user');
 
         // Logout user from application
         Route::post('logout', 'AuthController@logout');

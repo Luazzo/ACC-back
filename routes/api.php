@@ -17,8 +17,12 @@ use Illuminate\Http\Request;
 // Create New User
 Route::post('register', 'AuthController@register');
 
-Route::group(['prefix' => 'v1/auth','middleware'=> ['cors']], function(){
+Route::group([
 
+    'prefix' => 'auth',
+    'middleware'=> ['cors','api']
+
+], function(){
 
     // Login User
     Route::post('login', 'AuthController@login');
@@ -26,13 +30,15 @@ Route::group(['prefix' => 'v1/auth','middleware'=> ['cors']], function(){
     // Refresh the JWT Token
     Route::post('refresh', 'AuthController@refresh');
 
+
     // Below mention routes are available only for the authenticated users.
     Route::middleware('auth:api')->group(function () {
-        // Get user info
-        Route::post('user', 'AuthController@user');
-
         // Logout user from application
         Route::post('logout', 'AuthController@logout');
+
+        // Get user info
+        Route::post('me', 'AuthController@user');
+
     });
 
 });

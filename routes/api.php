@@ -17,6 +17,9 @@ use Illuminate\Http\Request;
 // Create New User
 Route::post('register', 'AuthController@register');
 
+Route::post('contact', 'ContactController@store');
+Route::post('contact-entreprise', 'ContactEntrepriseController@store');
+
 Route::group([
 
     'prefix' => 'auth',
@@ -31,14 +34,16 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
 
 
+
     // Below mention routes are available only for the authenticated users.
     Route::middleware('auth:api')->group(function () {
+
         // Logout user from application
         Route::post('logout', 'AuthController@logout');
 
         // Get user info
-        Route::post('me', 'AuthController@user');
-
+        Route::get('user', 'AuthController@user');
     });
 
 });
+

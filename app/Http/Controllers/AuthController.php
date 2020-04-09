@@ -66,7 +66,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
+    public function user()
     {
         return response()->json(auth()->user());
     }

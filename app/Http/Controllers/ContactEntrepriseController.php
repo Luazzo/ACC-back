@@ -2,35 +2,35 @@
 
     namespace App\Http\Controllers;
 
-    use App\Mail\ContactParticulier;
+    use App\Mail\ContactEntreprise;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Mail;
     use Illuminate\Validation\ValidationException;
 
-    class ContactController extends Controller
+    class ContactEntrepriseController extends Controller
     {
         public function create()
         {
-            return view('contact-particulier');
+            return view('contact-entreprise');
         }
-
 
         public function store(Request $request)
         {
             try {
                 $contact = $this->validate($request, [
-                    'nom' => 'required',
+                    'entreprise' => 'required',
+                    'personne' => 'required',
+                    'tva' => '',
+                    'numero' => '',
                     'email' => 'required|email',
+                    'tel' => 'required',
                     'message' => 'required',
-                    'gsm' => 'required',
-                    'ddn' => 'required',
-                    'permis' => '',         // il faut marquer touts les pramettres, même sans vlidation, si non - Error 500
                 ]);
             } catch (ValidationException $e) {
-                return response()->json( ['sent' => false]);
+                return response( 'Sorry, your massage could not be send at this time. - '.$e->getMessage(), 422);
             }
 
-            Mail::to( 'iacc7495@gmail.com')->send( new ContactParticulier($contact) );
+            Mail::to( 'iacc7495@gmail.com')->send( new ContactEntreprise($contact) );
 
             return response()->json( ['sent' => true], 200);
         }

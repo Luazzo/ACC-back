@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ContactParticulier extends Mailable
+class ContactEntreprise extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -21,7 +21,7 @@ class ContactParticulier extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param array $contact
+     * @return void
      */
     public function __construct(array $contact)
     {
@@ -35,7 +35,6 @@ class ContactParticulier extends Mailable
      */
     public function build()
     {
-        return $this
-            ->view('contact-particulier');
+        return $this->view('contact-entreprise');
     }
 }

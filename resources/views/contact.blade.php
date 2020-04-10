@@ -5,20 +5,13 @@
     <title>Contact Particulier</title>
 </head>
 <body>
-    <h1>Message d'un Particulier</h1>
+    <h1>Message de Contact</h1>
 
     <p>From: {{ $contact['nom'] }}</p>
 
     <p>Email: {{ $contact['email'] }}</p>
+
     <p>GSM: {{ $contact['gsm'] }}</p>
-    <p>DDN: {{ $contact['ddn'] }}</p>
-    <p>Permis:
-        @if ($contact['permis'])
-            {{$contact['permis']}}
-        @else
-            Non
-        @endif
-    </p>
 
     <p>Message: {{ $contact['message'] }}</p>
 

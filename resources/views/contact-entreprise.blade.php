@@ -5,7 +5,7 @@
     <title>Contact Entreprise</title>
 </head>
 <body>
-    <h1>Massage d'une Entreprise</h1>
+    <h1>Message d'une Entreprise</h1>
 
     <p>Entreprise: {{ $contact['entreprise'] }}</p>
 
@@ -27,7 +27,7 @@
     <p>Téléphone: {{ $contact['tel'] }}</p>
     <p>Email: {{ $contact['email'] }}</p>
 
-    <p>{{ $contact['message'] }}</p>
+    <p>Message: {{ $contact['message'] }}</p>
 
 
 </body>

@@ -14,18 +14,17 @@ use Illuminate\Http\Request;
 */
 
 // Below mention routes are public, user can access those without any restriction.
-// Create New User
-Route::post('register', 'AuthController@register');
 
 Route::post('contact-particulier', 'ParticulierController@store');
 Route::post('contact', 'ContactController@store');
 Route::post('contact-entreprise', 'ContactEntrepriseController@store');
 
-Route::group([
+// Create New User
+Route::post('register', 'ContactController@stores');
 
+Route::group([
     'prefix' => 'auth',
     'middleware'=> ['cors','api']
-
 ], function(){
 
     // Login User

@@ -14,6 +14,10 @@
             return view('contact');
         }
 
+        public function stores(Request $request)
+        { return response()->json( ['sent' => true], 200); }
+
+
         public function store(Request $request)
         {
             try {

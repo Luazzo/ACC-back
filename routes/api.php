@@ -19,13 +19,13 @@ Route::post('contact-particulier', 'ParticulierController@store');
 Route::post('contact', 'ContactController@store');
 Route::post('contact-entreprise', 'ContactEntrepriseController@store');
 
-// Create New User
-Route::post('register', 'ContactController@stores');
 
 Route::group([
     'prefix' => 'auth',
     'middleware'=> ['cors','api']
 ], function(){
+    // Create New User
+    Route::post('register', 'ContactController@stores');
 
     // Login User
     Route::post('login', 'AuthController@login');

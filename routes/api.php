@@ -24,7 +24,8 @@ Route::post('register', 'ContactController@stores');
 
 Route::group([
     'prefix' => 'auth',
-    'middleware'=> ['cors','api']
+    'middleware'=> ['cors','auth:api'],
+    'namespace' => 'App\Http\Controllers'
 ], function(){
 
     // Login User

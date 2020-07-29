@@ -24,7 +24,7 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-/*        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users',
             'password'  => 'required|min:3|confirmed',
@@ -32,16 +32,16 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 401);
         }
-*//*
+
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-*//*
+
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        $user->save();*/
+        $user->save();
         return response()->json(['status' => 'success'], 200);
     }
 
@@ -55,11 +55,11 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if ($token = $this->guard()->attempt($credentials)) {
+            return $this->respondWithToken($token);
         }
 
-        return $this->respondWithToken($token);
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
 
     /**
@@ -69,7 +69,7 @@ class AuthController extends Controller
      */
     public function user()
     {
-        return response()->json(auth()->user());
+        return response()->json($this->guard()->user());
     }
 
     /**
@@ -79,7 +79,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth()->logout();
+        $this->guard()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }
@@ -91,7 +91,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken($this->guard()->refresh());
     }
 
     /**
@@ -104,10 +104,15 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
-            'accessToken' => $token,
+            'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => $this->guard()->factory()->getTTL() * 60
         ]);
+    }
+
+    public function guard()
+    {
+        return Auth::guard('api');
     }
 
 }

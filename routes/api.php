@@ -19,7 +19,7 @@ Route::post('contact-particulier', 'ParticulierController@store');
 Route::post('contact', 'ContactController@store');
 Route::post('contact-entreprise', 'ContactEntrepriseController@store');
 
-
+/*
 Route::group([
     'prefix' => 'auth',
     'middleware'=> ['cors','auth:api'],
@@ -47,4 +47,4 @@ Route::group([
     });
 
 });
-
+*/

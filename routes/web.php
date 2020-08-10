@@ -16,7 +16,11 @@ Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
 
+
+Route::post('compagnies', 'CompagnyController@index');
+
+
+//any route il faut mettre la dernière
 Route::get('/{any?}', function (){
     return view('welcome');
-})->where('any', '^(?!api\/)[\/\w\.-]*');
-
+})->where('any', '^(?!api\/)[\/\w\.-]*');/**/

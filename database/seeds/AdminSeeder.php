@@ -1,23 +1,22 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
-use TCG\Voyager\Models\Role;
-use TCG\Voyager\Models\User;
+    use App\Models\Admin;
+    use Illuminate\Database\Seeder;
+    use TCG\Voyager\Models\Role;
 
-class UsersTableSeeder extends Seeder
+    class AdminSeeder extends Seeder
 {
     /**
-     * Auto generated seed file.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        if (User::count() == 0) {
+        if (Admin::count() == 0) {
             $role = Role::where('name', 'admin')->firstOrFail();
 
-            User::create([
+            Admin::create([
                 'name'           => 'Admin',
                 'email'          => 'admin@admin.com',
                 'password'       => bcrypt('password'),

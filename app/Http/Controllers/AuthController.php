@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Role;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -16,7 +18,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
     /**
@@ -33,16 +35,16 @@ class AuthController extends Controller
             return response()->json(['error' => $validator->errors()], 401);
         }
 
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
+        $role = Role::where('name', 'member')->first(); // Role Member par defaut
 
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->role_id = $role->id;
         $user->password = bcrypt($request->password);
+        $user->api_token = Str::random(60);
         $user->save();
-        return response()->json(['status' => 'success'], 200);
+        return response()->json(['status' => 'success', 'user'=>$user], 200);
     }
 
 
@@ -59,7 +61,7 @@ class AuthController extends Controller
             return $this->respondWithToken($token);
         }
 
-        return response()->json(['error' => 'Unauthorized'], 401);
+        return response()->json(['error' => 'Unauthorized'], 401); /**/
     }
 
     /**
@@ -110,7 +112,11 @@ class AuthController extends Controller
             'user' => $this->user()
         ]);
     }
-
+    /**
+     * Gets the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
     public function guard()
     {
         return Auth::guard('api');

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Promo;
 use Illuminate\Http\Request;
-use App\Models\Compagny;
+use Illuminate\Support\Facades\DB;
 
-class CompagnyController extends Controller
+class PromoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +15,14 @@ class CompagnyController extends Controller
      */
     public function index()
     {
-        $compagnies = Compagny::where("enable", 1)->get();
+        $today = date("Y-m-d");
+        $promos = DB::table('promos')
+                ->where('debut', '<=', $today)
+                ->where('fin', '>=', $today)
+                ->join('compagnies', 'compagnies.id', '=', 'promos.compagny_id')
+                ->get(array('promos.*', 'compagnies.image as logo'));
 
-        return response()->json($compagnies);
+        return response()->json($promos);
     }
 
     /**
@@ -44,11 +50,13 @@ class CompagnyController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
-        //
+        $promo = Promo::where('id',$id)->first();
+
+        return response()->json($promo);
     }
 
     /**
@@ -81,6 +89,16 @@ class CompagnyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    {
+        //
+    }
+    /**
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function __invoke(Request $request)
     {
         //
     }

@@ -18,7 +18,6 @@ class CreateCompagniesTable extends Migration
             $table->string('name');
             $table->string('lien');
             $table->string('image',255)->default('');
-            $table->boolean('enable',255)->default(true);
             $table->timestamps();
         });
 

@@ -12,15 +12,17 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 // Below mention routes are public, user can access those without any restriction.
-
 Route::post('contact-particulier', 'ParticulierController@store');
 Route::post('contact', 'ContactController@store');
 Route::post('contact-entreprise', 'ContactEntrepriseController@store');
 
-
 Route::post('compagnies', 'CompagnyController@index');
+
+Route::post('promos', 'PromoController@index');
+Route::post('promos/{id}', 'PromoController@show');
+
+
 
 Route::group([
     'prefix' => 'auth',

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Compagny extends Model
 {
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'name',
         'lien',

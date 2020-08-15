@@ -17,8 +17,6 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 
-Route::post('compagnies', 'CompagnyController@index');
-
 
 //any route il faut mettre la dernière
 Route::get('/{any?}', function (){
